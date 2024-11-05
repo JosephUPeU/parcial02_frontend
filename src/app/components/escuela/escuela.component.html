@@ -1,0 +1,44 @@
+<h2>Lista de Escuelas</h2>
+
+<!-- Botón para agregar una nueva escuela -->
+<button pButton type="button" icon="pi pi-plus" label="Agregar Escuela" class="p-button-success p-mb-3" (click)="showAddForm()"></button>
+
+<!-- Tabla de escuelas -->
+<p-table [value]="escuelas" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>ID Facultad</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-escuela>
+    <tr>
+      <td>{{ escuela.id }}</td>
+      <td>{{ escuela.nombre }}</td>
+      <td>{{ escuela.id_facultad }}</td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" label="Editar" class="p-button-sm p-button-info" (click)="editEscuela(escuela)"></button>
+        <button pButton type="button" icon="pi pi-trash" label="Eliminar" class="p-button-sm p-button-danger" (click)="deleteEscuela(escuela.id)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Formulario para agregar o editar escuela -->
+<div *ngIf="isEditing || isAdding" class="form-container">
+  <h3>{{ isEditing ? 'Editar Escuela' : 'Agregar Escuela' }}</h3>
+  <form (ngSubmit)="saveEscuela()">
+    <div class="p-field">
+      <label for="nombre">Nombre</label>
+      <input pInputText id="nombre" [(ngModel)]="selectedEscuela.nombre" name="nombre" required />
+    </div>
+    <div class="p-field">
+      <label for="id_facultad">ID Facultad</label>
+      <input pInputText id="id_facultad" [(ngModel)]="selectedEscuela.id_facultad" name="id_facultad" required />
+    </div>
+    <button pButton type="submit" label="Guardar" class="p-button-success"></button>
+    <button pButton type="button" label="Cancelar" class="p-button-secondary" (click)="cancel()"></button>
+  </form>
+</div>
